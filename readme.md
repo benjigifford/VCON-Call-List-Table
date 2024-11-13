@@ -1,6 +1,6 @@
 # Streamlit Paged Table Application
 
-A simple Streamlit application that displays a paged table.
+This Streamlit application connects to a MongoDB database to display call logs with pagination, making it easy to browse through call records.
 
 ## Features
 
