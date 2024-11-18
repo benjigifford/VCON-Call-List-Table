@@ -3,6 +3,7 @@ from pymongo import MongoClient
 import pandas as pd
 import openai
 import json
+from fpdf import FPDF
 
 # Set up Streamlit app title and intro
 st.title("Ben's Call Logs")
@@ -58,14 +59,16 @@ for result in results:
     dialog_text = json.dumps(result)  # Convert JSON to a string
     summary = generate_summary(dialog_text)
 
-    # Append data to call logs
+    # Append data to call logs with pricing calculation
     call_logs.append({
         "When": created_at,
         "To": to_name,
         "From": from_name,
         "Duration (minutes)": minute_duration,
-        "Summary": summary
+        "Summary": summary,
+       "Price": f"${minute_duration * 0.50:.2f}"  # Calculate price at $0.50/minute
     })
+
 
 # Convert to DataFrame
 df = pd.DataFrame(call_logs)
@@ -92,3 +95,44 @@ with col2:
         st.session_state.page += 1
 
 st.write(f"Page {st.session_state.page} of {total_pages}")
+
+def export_to_pdf(df):
+    pdf = FPDF()
+    pdf.set_auto_page_break(auto=True, margin=15)
+    pdf.add_page()
+    pdf.set_font("Arial", size=12)
+    pdf.cell(200, 10, txt="Call Logs", ln=True, align='C')
+
+    # Table header
+    pdf.set_font("Arial", size=10)
+    col_widths = [30, 30, 30, 30, 30, 70]  # Adjusted widths to allocate more space for the Summary column
+    headers = ["When", "To", "From", "Duration (minutes)", "Price", "Summary"]
+    for header, width in zip(headers, col_widths):
+        pdf.cell(width, 10, header, 1, 0, 'C')
+    pdf.ln()
+
+    # Table rows
+    for _, row in df.iterrows():
+        pdf.cell(col_widths[0], 10, row["When"], 1)
+        pdf.cell(col_widths[1], 10, row["To"], 1)
+        pdf.cell(col_widths[2], 10, row["From"], 1)
+        pdf.cell(col_widths[3], 10, str(row["Duration (minutes)"]), 1)
+        pdf.cell(col_widths[4], 10, row["Price"], 1)
+
+        # Wrap text for Summary column
+        summary = row["Summary"]
+        x, y = pdf.get_x(), pdf.get_y()
+        pdf.multi_cell(col_widths[5], 10, summary, 1)  # Dynamically adjusts height based on text length
+        pdf.set_xy(x + col_widths[5], y)  # Move to the next row start position
+        pdf.ln()
+
+    return pdf
+
+if st.button("Export to PDF"):
+    pdf = export_to_pdf(df)
+    pdf_output = "call_logs.pdf"
+    pdf.output(pdf_output)
+    
+    with open(pdf_output, "rb") as f:
+        st.download_button("Download PDF", f, file_name="call_logs.pdf", mime="application/pdf")
+
