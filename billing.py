@@ -128,6 +128,7 @@ def export_to_pdf(df):
 
     return pdf
 
+# Export to PDF Button
 if st.button("Export to PDF"):
     pdf = export_to_pdf(df)
     pdf_output = "call_logs.pdf"
@@ -136,3 +137,8 @@ if st.button("Export to PDF"):
     with open(pdf_output, "rb") as f:
         st.download_button("Download PDF", f, file_name="call_logs.pdf", mime="application/pdf")
 
+# See Diary Button
+if st.button("See Diary"):
+    st.write("### Summaries of VCONs")
+    for idx, summary in enumerate(df["Summary"], start=1):
+        st.markdown(f"- **{idx}:** {summary}")
