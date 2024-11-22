@@ -28,6 +28,7 @@ Configure MongoDB credentials in secrets.toml:
 mongo_url = "<your_mongodb_url>"
 mongo_db = "<your_database_name>"
 mongo_collection = "<your_collection_name>"
+openai_api_key = "<your_api_key>"
 ```
 
 To run the application, simply execute the following command:
