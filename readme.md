@@ -18,7 +18,7 @@ This Streamlit application connects to a MongoDB database to display call logs w
 
 Install dependencies using pip:
 ```bash
-pip install streamlit pandas pymongo fpdf
+pip install streamlit pandas pymongo fpdf openai
 ```
 ## Usage
 
