@@ -12,7 +12,7 @@ This Streamlit application connects to a MongoDB database to display call logs w
 ## Requirements
 
 - Python 3.12 or later
-- Required packages: `streamlit`, `pandas`, `pymongo`, `fpdf`
+- Required packages: `streamlit`, `pandas`, `pymongo`, `fpdf`, `openai`
 
 ## Installation
 
