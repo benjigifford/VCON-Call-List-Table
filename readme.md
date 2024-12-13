@@ -31,6 +31,11 @@ mongo_collection = "<your_collection_name>"
 openai_api_key = "<your_api_key>"
 ```
 
+This application needs an older version of openai to work properly. You can pin the installation like this:
+```bash
+pip install openai==0.28
+```
+
 To run the application, simply execute the following command:
 
 ```bash
