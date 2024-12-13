@@ -2,7 +2,7 @@
 name = "mindmaking-billing"
 version = "0.1.0"
 description = "A streamlit billing application based on vcons"
-authors = ["Thomas Howe <ghostofbasho@gmail.com>"]
+authors = ["Benjamin Gifford"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
