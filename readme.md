@@ -34,7 +34,7 @@ openai_api_key = "<your_api_key>"
 To run the application, simply execute the following command:
 
 ```bash
-streamlit run app.py
+streamlit run billing.py
 ```
 
 ## Configuration
